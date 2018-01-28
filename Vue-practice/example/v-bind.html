@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>v-bind 实例</title>
+    <script type=" text/javascript" src="../assets/js/vue.js"></script>
+</head>
+<body>
+    <h1>v-bind 实例</h1>
+    <hr>
+    <div id="app">
+      <p><img v-bind:src="imgSrc" width="200px"></p>
+      <p><a :href="webUrl" target="_blank" >learn vue</a></p>
+      <hr>
+
+      <h3 :class="className">1、绑定Class</h3>
+      <h3 :class="{classA:isOk }">2、绑定Class中的判断</h3>
+      <h3 :class="[classA, classB]">3、绑定Class中的数组</h3>
+      <h3 :class="isOk?classA:classB">3、绑定Class中的三元运算符</h3>
+      <hr>
+
+      <div>
+          <input type="checkbox" id="isOk" v-model="isOk">
+          <label for="isOk">isOk= {{ isOk }}</label>
+      </div>
+      <hr>
+
+      <div :style="styleObject">5、绑定Style</div>
+    </div>
+
+    <style>
+        .classA{
+            color:lightcoral;
+        }
+        .classB{
+            /* color:lightseagreen; */
+            font-size: 150%;
+        }
+    </style>
+
+
+    <script type="text/javascript">
+        var app = new Vue({
+            el: '#app',
+            data: {
+               message: 'hello world!',
+               imgSrc: 'http://baidu.com/wp-content/uploads/2017/02/vue01-2.jpg',
+               webUrl: 'http://jspang.com',
+               className: 'classA',
+               isOk: false,
+               classA: 'classA',
+               classB: 'classB',
+               red: 'lightcoral',
+               styleObject: {
+                    color: 'gold',
+                    fontSize: '20px'
+                
+               }
+            }
+        })
+    </script>
+</body>
+</html>

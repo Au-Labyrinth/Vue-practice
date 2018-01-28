@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>instance methods demo02</title>
+    <script type=" text/javascript" src="../assets/js/jquery.min.js"></script>
+    <script type=" text/javascript" src="../assets/js/vue.js"></script>
+</head>
+<body>
+    <h1>instance methods demo02</h1>
+    <hr>
+    <div></div>
+    <div id="app">
+      
+    </div>
+
+    <p><button onclick="reload()">Reload</button></p>
+    <p><button onclick="tick()">Modifyed</button></p>
+    <p><button onclick="destroy()">Destroy</button></p>
+
+
+    <script type="text/javascript">
+        var au = Vue.extend({
+            template: `<p>{{ message }}</p>`,
+            data: function() {
+                return {
+                    message: 'Hello, I am Au!'
+                }
+            },
+            mounted: function() {
+                console.log("mounted 被创建")
+            },
+            destroyed: function() {
+                console.log("instance had been destroyed!")
+            },
+            updated: function() {
+                console.log("updated 更新之后!")
+            }
+
+        })
+
+        var vm = new au().$mount("#app");
+
+        function destroy() {
+            vm.$destroy();
+        }
+
+        function reload() {
+            vm.$forceUpdate();
+        }
+
+        function tick() {
+            vm.message = "update message info";
+            vm.$nextTick(function() {
+                console.log("message 更新完成之后被调用");
+            })
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>computed options</title>
+    <script type=" text/javascript" src="../assets/js/vue.js"></script>
+</head>
+<body>
+    <h1>computed options</h1>
+    <hr>
+    <header></header>
+
+    <div id="app">
+        <p>{{newPrice}}</p>
+        <ol>
+            <li v-for="item in reserveNews">{{item.title}}--{{item.date}}</li>
+        </ol>
+    </div>
+
+    <script type="text/javascript">
+      var newsList = [
+          {title: '习近平主席达沃斯演讲一周年的世界回响', date: '2018/01/27'},
+          {title: '打开解放思想这个“总开关”', date: '2018/01/27'},
+          {title: '党中央国务院决定了!在全国开展扫黑除恶专项斗争', date: '2018/01/27'},
+          {title: '宪法修改须依法进行  学习贯彻十九届二中全会精神', date: '2018/01/27'}
+      ] 
+
+      var app = new Vue({
+          el: '#app',
+          data: {
+            price: 200,
+            newsList: newsList
+          },
+          computed: {
+              newPrice: function() {
+                  return this.price = '￥' + this.price  + '元';
+              },
+              reserveNews: function() {
+                  return this.newsList.reverse();
+              }
+          }
+      })
+
+    </script>
+</body>
+</html>

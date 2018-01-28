@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>instance methods demo</title>
+    <script type=" text/javascript" src="../assets/js/jquery.min.js"></script>
+    <script type=" text/javascript" src="../assets/js/vue.js"></script>
+</head>
+<body>
+    <h1>instance methods demo</h1>
+    <hr>
+    <div></div>
+    <div id="app">
+      {{message}}
+    </div>
+
+
+    <script type="text/javascript">
+        var app = new Vue({
+            el: '#app',
+            data: {
+                message: "向前"
+            },
+            mounted: function() {
+                $("#app").html("This is modified by jquery");
+            },
+            methods: {
+                add: function() {
+                    console.log("调用了构造器内部的ADD方法")
+                }
+            }
+        })
+
+        app.add();
+    </script>
+</body>
+</html>

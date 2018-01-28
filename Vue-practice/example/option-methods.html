@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>computed options</title>
+    <script type=" text/javascript" src="../assets/js/vue.js"></script>
+</head>
+<body>
+    <h1>computed options</h1>
+    <hr>
+    <header></header>
+
+    <div id="app">
+        {{a}}
+        <p><button @click="add(0, $event)">add</button></p>
+
+        <p><btn @click.native="add(0, $event)"></btn></p>
+    </div>
+    <button onclick="app.add(2)">outer ADD</button>
+
+    <script type="text/javascript">
+      var btn = {
+          template: `<button>组件ADD</button>`
+      }
+
+      var app = new Vue({
+          el: '#app',
+          data: {
+            a: 0,
+          },
+          components: {
+            "btn": btn
+          },
+          methods: {
+              add: function(num, evnt) {
+                  if(num != "") {
+                      this.a += num;
+                  } else {
+                      this.a++
+                  }
+              }
+          }
+      })
+
+    </script>
+</body>
+</html>
