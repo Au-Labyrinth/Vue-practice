@@ -14,6 +14,7 @@ const express = require('express')
 const app = express()
 var appData = require('../db.json')
 var getNewsList = appData.getNewsList
+var login = appData.login
 var apiRoutes = express.Router()
 app.use('/api', apiRoutes)
 
@@ -57,6 +58,12 @@ const devWebpackConfig = merge(baseWebpackConfig, {
           data: getNewsList
         })
       }) 
+      app.post('/api/login', (req, res) => {
+        res.json({
+          errno: 0,
+          data: login
+        })
+      })
     }
   },
   plugins: [
