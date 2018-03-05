@@ -26,16 +26,15 @@
         <div class="index-right">
             <slide-show :slides="slides" :inv="slideSpeed" @onchange="doSomthingOnSlideChange"></slide-show>
             <div class="index-board-list">
-                <div 
-                class="index-board-item" 
-                v-for=" (item, index) in boardList"
-                :class="[{'line-last' : index % 2 !== 0},
+                <div class="index-board-item" 
+                    v-for=" (item, index) in boardList"
+                    :class="[{'line-last' : index % 2 !== 0},
                     'index-board-' + item.id]">
                    <div class="index-board-item-inner">
                        <h2>{{ item.title }}</h2>
                        <p>{{ item.description }}</p>
                        <div class="index-board-button">
-                           <a href="" class="button">立即购买</a>
+                           <router-link :to="item.toKey" class="button">立即购买</router-link>
                        </div>
                    </div>
                 </div>
@@ -78,12 +77,12 @@
                     {
                         src: require('../assets/slideShow/pic3.jpg'),
                         title: 'xxx3',
-                        href: 'http://xxx.xxx.com'
+                        href: 'detail/forecast'
                     },
                     {
                         src: require('../assets/slideShow/pic4.jpg'),
                         title: 'xxx4',
-                        href: 'detail/forecast'
+                        href: 'detail/publish'
                     }
                 ],
                  boardList: [
