@@ -41,7 +41,7 @@
 </template>
 
 <script>
-    import Dialog from './dialog'
+    import Dialog from './base/dialog'
     import LogForm from './logForm'
     import RegForm from './regForm'
     export default {
@@ -176,4 +176,14 @@
        width: 1200px;
        margin: 0 auto;
    }
+   .button {
+        background: #4fc08d;
+        color: #fff;
+        display: inline-block;
+        padding: 10px 20px;
+        cursor: pointer;
+    }
+    .button:hover {
+        background: #4fc08d;
+    }
 </style>

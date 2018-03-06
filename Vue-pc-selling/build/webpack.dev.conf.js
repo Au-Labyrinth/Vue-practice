@@ -15,6 +15,8 @@ const app = express()
 var appData = require('../db.json')
 var getNewsList = appData.getNewsList
 var login = appData.login
+var getPrice = appData.getPrice
+var createOrder = appData.createOrder
 var apiRoutes = express.Router()
 app.use('/api', apiRoutes)
 
@@ -62,6 +64,18 @@ const devWebpackConfig = merge(baseWebpackConfig, {
         res.json({
           errno: 0,
           data: login
+        })
+      })
+      app.post('/api/getPrice', (req, res) => {
+        res.json({
+          errno: 0,
+          data: getPrice
+        })
+      })
+      app.post('/api/createOrder', (req, res) => {
+        res.json({
+          errno: 0,
+          data: createOrder
         })
       })
     }

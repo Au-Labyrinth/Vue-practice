@@ -10,7 +10,7 @@
                   购买数量：
               </div>
               <div class="sales-board-line-right">
-                <!-- <v-counter @on-change="onParamChange('buyNum', $event)"></v-counter> -->
+                <v-counter @on-change="onParamChange('buyNum', $event)"></v-counter>
               </div>
           </div>
           <div class="sales-board-line">
@@ -18,43 +18,39 @@
                   产品类型：
               </div>
               <div class="sales-board-line-right">
-                  <!-- <v-selection :selections="buyTypes" @on-change="onParamChange('buyType', $event)"></v-selection> -->
+                  <v-selection :selections="buyTypes" @on-change="onParamChange('buyType', $event)"></v-selection>
               </div>
           </div>
           <div class="sales-board-line">
               <div class="sales-board-line-left">
                   有效时间：
               </div>
-              <!-- <div class="sales-board-line-right">
-                  <v-chooser
-                  :selections="periodList"
-                  @on-change="onParamChange('period', $event)"></v-chooser>
-              </div> -->
+              <div class="sales-board-line-right">
+                  <v-chooser :selections="periodList" @on-change="onParamChange('period', $event)"></v-chooser>
+              </div>
           </div>
           <div class="sales-board-line">
               <div class="sales-board-line-left">
                   产品版本：
               </div>
-              <!-- <div class="sales-board-line-right">
-                  <v-mul-chooser
-                  :selections="versionList"
-                  @on-change="onParamChange('versions', $event)"></v-mul-chooser>
-              </div> -->
+              <div class="sales-board-line-right">
+                  <v-mul-chooser :selections="versionList" @on-change="onParamChange('versions', $event)"></v-mul-chooser>
+              </div>
           </div>
           <div class="sales-board-line">
               <div class="sales-board-line-left">
                   总价：
               </div>
               <div class="sales-board-line-right">
-                  <!-- {{ price }} 元 -->
+                  {{ price }} 元
               </div>
           </div>
           <div class="sales-board-line">
               <div class="sales-board-line-left">&nbsp;</div>
               <div class="sales-board-line-right">
-                  <!-- <div class="button" @click="showPayDialog">
+                  <div class="button" @click="showPayDialog">
                     立即购买
-                  </div> -->
+                  </div>
               </div>
           </div>
       </div>
@@ -80,44 +76,197 @@
           <li>用户所在地理区域分布状况等</li>
         </ul>
       </div>
-     <!--  <my-dialog :is-show="isShowPayDialog" @on-close="hidePayDialog">
-        <table class="buy-dialog-table">
-          <tr>
-            <th>购买数量</th>
-            <th>产品类型</th>
-            <th>有效时间</th>
-            <th>产品版本</th>
-            <th>总价</th>
-          </tr>
-          <tr>
-            <td>{{ buyNum }}</td>
-            <td>{{ buyType.label }}</td>
-            <td>{{ period.label }}</td>
-            <td>
-              <span v-for="item in versions">{{ item.label }}</span>
-            </td>
-            <td>{{ price }}</td>
-          </tr>
+      <my-dialog :is-show="isShowPayDialog" @on-close='closeDialog'>
+          <table class="buy-dialog-table">
+            <tr>
+                <th>购买数量</th>
+                <th>产品类型</th>
+                <th>有效时间</th>
+                <th>产品版本</th>
+                <th>总价</th>
+            </tr>
+            <tr>
+                <td>{{ buyNum }}</td>
+                <td>{{ buyType.label }}</td>
+                <td>{{ period.label }}</td>
+                <td>
+                    <span v-for="(item, index) in versions" :key='index'>{{ item.label }}</span>
+                </td>
+                <td>{{ price }}</td>
+            </tr>
         </table>
         <h3 class="buy-dialog-title">请选择银行</h3>
         <bank-chooser @on-change="onChangeBanks"></bank-chooser>
-        <div class="button buy-dialog-btn" @click="confirmBuy">
-          确认购买
-        </div>
+        <div class="button buy-dialog-btn" @click="confirmBuy">确认购买</div>
       </my-dialog>
-      <my-dialog :is-show="isShowErrDialog" @on-close="hideErrDialog">
-        支付失败！
-      </my-dialog>
-      <check-order :is-show-check-dialog="isShowCheckOrder" :order-id="orderId" @on-close-check-dialog="hideCheckOrder"></check-order> -->
+      <check-order :is-show-check-dialog="isShowCheckOrder"></check-order>
+    
+      <my-dialog :is-show="isShowErrDialog" @on-close="closeDialog">支付失败</my-dialog>
+      <check-order :is-show-check-dialog="isShowCheckOrder" :order-id="orderId" @on-close-check-dialog="closeDialog"></check-order>
   </div>
 </template>
 
 <script>
-    export default {
-    
+import axios from 'axios'
+import _ from 'lodash'
+import VSelection from '../../components/base/selection'
+import VCounter from '../../components/base/counter'
+import VChooser from '../../components/base/chooser'
+import VMulChooser from '../../components/base/multiplyChooser'
+import MyDialog from '../../components/base/dialog'
+import BankChooser from '../../components/bankChooser'
+import CheckOrder from '../../components/checkOrder'
+export default {
+    components: {
+        VSelection,
+        VCounter,
+        VChooser,
+        VMulChooser,
+        MyDialog,
+        BankChooser,
+        CheckOrder
+    },
+    data () {
+        return {
+            buyNum: 0,
+            buyType: {},
+            versions: [],
+            period: {},
+            price: 0,
+            orderId: null,
+            versionList: [
+                {
+                    label: '客户版',
+                    value: 0
+                },
+                {
+                    label: '代理商版',
+                    value: 1
+                },
+                {
+                    label: '专家版',
+                    value: 2
+                }
+            ],
+            periodList: [
+                {
+                    label: '半年',
+                    value: 0
+                },
+                {
+                    label: '一年',
+                    value: 1
+                },
+                {
+                    label: '三年',
+                    value: 2
+                }
+            ],
+            buyTypes: [
+                {
+                    label: '入门版',
+                    value: 0
+                },
+                {
+                    label: '中级版',
+                    value: 1
+                },
+                {
+                    label: '高级版',
+                    value: 2
+                }
+            ],
+            isShowPayDialog: false,
+            bankId: null,
+            isShowCheckOrder: false,
+            isShowErrDialog: false
+        }
+    },
+    methods: {
+        onParamChange (attr, val) {
+            this[attr] = val
+            this.getPrice();
+        },
+        getPrice () {
+            let buyVersionsArray = _.map(this.versions, (item) => {
+                return item.value
+            })
+            let reqParams = {
+                buyNumber: this.buyNum,
+                buyType: this.buyType.value,
+                period: this.period.value,
+                version: buyVersionsArray.join(',')
+            }
+            axios.post('/api/getPrice', reqParams)
+            .then((response) => {
+                let data = response.data.data
+                this.price = data.amount
+            })
+        },
+        showPayDialog () {
+            this.isShowPayDialog = true
+        },
+        closeDialog () {
+            this.isShowPayDialog = false
+        },
+        onChangeBanks (bankObj) {
+            this.bankId = bankObj.id
+            console.log(bankObj.id)
+        },
+        confirmBuy () {
+            let buyVersionsArray = _.map(this.versions, (item) => {
+                return item.value
+            })
+            let reqParams = {
+                buyNumber: this.buyNum,
+                buyType: this.buyType.value,
+                period: this.period.value,
+                version: buyVersionsArray.join(','),
+                bankId: this.bankId
+            }
+            axios.post('/api/createOrder', reqParams)
+            .then((response) => {
+                let data = response.data.data
+                this.orderId = data.orderId
+                this.isShowCheckOrder = true
+                this.isShowPayDialog = false
+            }, (err) => {
+                this.isShowBuyDialog = false
+                this.isShowErrDialog = true
+            })
+        }
+    },
+    mounted () {
+        this.buyNum = 0
+        this.buyType = this.buyTypes[0]
+        this.versions = this.versionList[0]
+        this.period = this.periodList[0]
+        this.getPrice()
     }
+}
 </script>
 
 <style scoped>
-
+.buy-dialog-title {
+  font-size: 16px;
+  font-weight: bold;
+}
+.buy-dialog-btn {
+  margin-top: 20px;
+}
+.buy-dialog-table {
+  width: 100%;
+  margin-bottom: 20px;
+}
+.buy-dialog-table td,
+.buy-dialog-table th{
+  border: 1px solid #e3e3e3;
+  text-align: center;
+  padding: 5px 0;
+}
+.buy-dialog-table th {
+  background: #4fc08d;
+  color: #fff;
+  border: 1px solid #4fc08d;
+}
 </style>
