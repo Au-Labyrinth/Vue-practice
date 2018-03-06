@@ -100,7 +100,6 @@
         <div class="button buy-dialog-btn" @click="confirmBuy">确认购买</div>
       </my-dialog>
       <check-order :is-show-check-dialog="isShowCheckOrder"></check-order>
-    
       <my-dialog :is-show="isShowErrDialog" @on-close="closeDialog">支付失败</my-dialog>
       <check-order :is-show-check-dialog="isShowCheckOrder" :order-id="orderId" @on-close-check-dialog="closeDialog"></check-order>
   </div>
@@ -237,9 +236,9 @@ export default {
         }
     },
     mounted () {
-        this.buyNum = 0
+        this.buyNum = 1
         this.buyType = this.buyTypes[0]
-        this.versions = this.versionList[0]
+        this.versions = [this.versionList[0]]
         this.period = this.periodList[0]
         this.getPrice()
     }

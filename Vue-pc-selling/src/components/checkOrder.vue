@@ -5,12 +5,13 @@
             <div class="button" @click="checkStatus">支付成功</div>
             <div class="button" @click="checkStatus">支付失败</div>
         </this-dialog>
-        <this-dialog :is-show="isShowSuccessDialog">购买成功!</this-dialog>
+        <this-dialog :is-show="isShowSuccessDialog" @on-close="closeDialog">购买成功!</this-dialog>
         <this-dialog :is-show="isShowFailDialog">购买失败!</this-dialog>
     </div>
 </template>
 
 <script>
+    import axios from 'axios'
     import Dialog from './base/dialog'
     export default {
         components: {
@@ -33,7 +34,7 @@
         },
         methods: {
             checkStatus () {
-                /* axios.post('/api/checkOrder', {
+                axios.post('/api/checkOrder', {
                     orderId: this.orderId
                 })
                 .then((response) => {
@@ -42,7 +43,11 @@
                 }, (err) => {
                     this.isShowFailDialog = true
                     this.$emit('on-close-check-dialog')
-                }) */
+                })
+            },
+            closeDialog () {
+                this.isShowSuccessDialog = false
+                this.isShowFailDialog = false
             }
         }
     }

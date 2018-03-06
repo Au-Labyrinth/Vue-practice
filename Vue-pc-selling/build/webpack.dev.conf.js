@@ -17,6 +17,7 @@ var getNewsList = appData.getNewsList
 var login = appData.login
 var getPrice = appData.getPrice
 var createOrder = appData.createOrder
+var checkStatus = appData.checkOrder
 var apiRoutes = express.Router()
 app.use('/api', apiRoutes)
 
@@ -76,6 +77,12 @@ const devWebpackConfig = merge(baseWebpackConfig, {
         res.json({
           errno: 0,
           data: createOrder
+        })
+      })
+      app.post('/api/checkOrder', (req, res) => {
+        res.json({
+          errno: 0,
+          data: checkStatus
         })
       })
     }
