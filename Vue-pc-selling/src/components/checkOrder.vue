@@ -5,8 +5,8 @@
             <div class="button" @click="checkStatus">支付成功</div>
             <div class="button" @click="checkStatus">支付失败</div>
         </this-dialog>
-        <this-dialog :is-show="isShowSuccessDialog" @on-close="closeDialog">购买成功!</this-dialog>
-        <this-dialog :is-show="isShowFailDialog">购买失败!</this-dialog>
+        <this-dialog :is-show="isShowSuccessDialog" @on-close="toOrderList">购买成功!</this-dialog>
+        <this-dialog :is-show="isShowFailDialog" @on-close='toOrderList'>购买失败!</this-dialog @click="">
     </div>
 </template>
 
@@ -45,9 +45,12 @@
                     this.$emit('on-close-check-dialog')
                 })
             },
-            closeDialog () {
+            closeDtoOrderListalog () {
                 this.isShowSuccessDialog = false
                 this.isShowFailDialog = false
+            },
+            toOrderList () {
+                this.$router.push({path: '/orderList'})
             }
         }
     }
