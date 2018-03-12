@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
-import orderList from '../pages/oderList'
+import orderList from './modules/oderList.js'
 
 Vue.use(Vuex)
 

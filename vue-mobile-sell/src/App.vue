@@ -2,7 +2,7 @@
   <div>
     <v-header :seller='seller'></v-header>
     <div class="tab">
-      <div class="tab-item">
+      <div class="tab-item border-1px">
         <router-link to="/goods">商品</router-link>
       </div>
       <div class="tab-item">
@@ -34,7 +34,6 @@ export default {
   },
   created () {
      axios.get('/api/getSeller').then((res) => {
-      console.log(res.data)
       if (res.data.errno === ERR_OK) {
         this.seller = res.data.data
       }

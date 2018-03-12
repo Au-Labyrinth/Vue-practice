@@ -5,6 +5,9 @@
           <div class="order-list-option">
               选择产品: <v-selection :selections="products" @on-change="productChange"></v-selection>
           </div>
+          <div class="order-list-option">
+              选择产品: <v-selection :selections="products" @on-change="productChange"></v-selection>
+          </div>
 
           <div class="order-list-option">
               开始时间: <vue-date-picker :value="startDate" :width="'100px'" @on-change="changeStartDate"></vue-date-picker>
@@ -106,6 +109,11 @@
         },
         methods: {
             productChange (obj) {
+                /* this.$store.commit('updateParams', {
+                    key: 'productId',
+                    val: obj.value
+                })
+                this.$store.dispatch('fetchOrderLIst') */                
                 this.productId = obj.value
                 this.getTableData()
             },
@@ -148,6 +156,7 @@
         },
         mounted () {
             this.getTableData()
+            // this.$store.dispatch('fetchOrderList')
         }
     
     }

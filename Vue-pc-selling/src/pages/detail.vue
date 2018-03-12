@@ -20,6 +20,7 @@
 
 <script>
     export default {
+        name:'DetailPage',
         data () {
             return {
                  products: [

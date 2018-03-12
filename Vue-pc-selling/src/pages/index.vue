@@ -3,15 +3,15 @@
         <div class="index-left">
             <div class="index-left-block">
                 <h2>全部产品</h2>
-                <template v-for="product in productList">
-                    <h3 :key="product-title">{{ product.title }}</h3>
-                    <ul :key="product-ul">
+                <template v-for="(product,index) in productList">
+                    <h3 :key='product[index]'>{{ product.title }}</h3>
+                    <ul>
                         <li v-for="(item,index) in product.list" :key="index">
                             <a :href="item.url">{{ item.name }}</a>
                             <span v-if="item.hot" class="hot-tag">HOT</span>
                         </li>
                     </ul>
-                    <div v-if="!product.last" class="hr" :key="product-last"></div>
+                    <div v-if="!product.last" class="hr"></div>
                 </template>
             </div>
             <div class="index-left-block least-news">
@@ -67,22 +67,22 @@
                     {
                         src: require('../assets/slideShow/pic1.jpg'),
                         title: 'xxx1',
-                        href: 'detail/analysis'
+                        href: '/detail/analysis'
                     },
                     {
                         src: require('../assets/slideShow/pic2.jpg'),
                         title: 'xxx2',
-                        href: 'detail/count'
+                        href: '/detail/count'
                     },
                     {
                         src: require('../assets/slideShow/pic3.jpg'),
                         title: 'xxx3',
-                        href: 'detail/forecast'
+                        href: '/detail/forecast'
                     },
                     {
                         src: require('../assets/slideShow/pic4.jpg'),
                         title: 'xxx4',
-                        href: 'detail/publish'
+                        href: '/detail/publish'
                     }
                 ],
                  boardList: [

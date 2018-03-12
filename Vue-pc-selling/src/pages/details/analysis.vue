@@ -116,6 +116,7 @@ import MyDialog from '../../components/base/dialog'
 import BankChooser from '../../components/bankChooser'
 import CheckOrder from '../../components/checkOrder'
 export default {
+    name: 'DetailAnaPage',
     components: {
         VSelection,
         VCounter,

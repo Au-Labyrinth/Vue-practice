@@ -11,32 +11,39 @@ import DetailPubPage from '@/pages/details/publish'
 Vue.use(Router)
 
 export default new Router({
-  mode: 'history',
+  // mode: 'history',
   routes: [
     {
       path: '/',
+      name: 'IndexPage',
       component: IndexPage
     },
     {
       path: '/orderList',
+      name: 'OrderListPage',
       component: OrderListPage
     },
     {
       path: '/detail',
+      name: 'DetailPage',
       redirect: '/detail/analysis',
       component: DetailPage,
       children: [
         {
           path: 'analysis',
+          name: 'DetailAnaPage',
           component: DetailAnaPage
         },{
           path: 'count',
+          name: 'DetailCouPage',
           component: DetailCouPage
         },{
           path: 'forecast',
+          name: 'DetailForPage',
           component: DetailForPage
         },{
           path: 'publish',
+          name: 'DetailPubPage',
           component: DetailPubPage
         }
       ]
