@@ -2,7 +2,7 @@
   <div class="goods">
     <div class="menu-wrapper" ref='menuWrapper'>
       <ul>
-        <li v-for='(item,index) in goods' :key='index' class='menu-item' :class="{'currentIndex': currentIndex===index}">
+        <li v-for='(item,index) in goods' :key='index' class='menu-item' :class="{'current': currentIndex===index}" @click='selectMenu(index, $event)'>
           <span class='text border-1px'>
             <i v-show='item.type>0' class='icon' :class='classMap[item.type]'></i>{{ item.name }}
           </span>
@@ -14,7 +14,7 @@
         <li v-for='(item,index) in goods' :key='index' class='food-list food-list-hook'>
           <h1 class="title">{{ item.name }}</h1>
           <ul>
-            <li v-for='(food,index) in item.foods' :key='index' class='food-item border-1px'>
+            <li @click='selectFood(food,$event)' v-for='(food,index) in item.foods' :key='index' class='food-item border-1px'>
               <div class='icon'>
                 <img :src="food.icon" width='57px' height='57px'>
               </div>
@@ -28,23 +28,37 @@
                   <span class="now">￥{{ food.price }}</span>
                   <span class="old" v-show='food.oldPrice'>{{ food.oldPrice }}</span>
                 </div>
+                <div class="cartcontrol-wrapper">
+                  <cartcontrol @add="addFood" :food="food"></cartcontrol>
+                </div>
               </div>
             </li>
           </ul>
         </li>
       </ul>
     </div>
+    <shopcart ref="shopcart" :selectFoods="selectFoods" :delivery-price='seller.deliveryPrice' :min-price='seller.minPrice'></shopcart>
+    <food @add='addFood' :food="selectedFood" ref='food'></food>
   </div>
 </template>
 
 <script>
   import axios from 'axios'
   import BScroll from 'better-scroll'
+  import Cartcontrol from 'components/cartcontrol/cartcontrol'
+  import Shopcart from 'components/shopcart/shopcart'
+  import Food from 'components/food/food'
 
   const ERR_OK = 0
+
   export default {
     name: 'Goods',
-    porops: {
+    components: {
+      Cartcontrol,
+      Shopcart,
+      Food
+    },
+    props: {
       seller: {
         type: Object
       }
@@ -53,19 +67,32 @@
       return {
         goods: [],
         listHeight: [],
-        scrollY: 0
+        scrollY: 0,
+        selectedFood: {}
       }
     },
     computed: {
       currentIndex () {
-        for (let i = 0; i < this.listHeight.length; i++) {
+        let len = this.listHeight.length
+        for (let i = 0; i < len; i++) {
           let height1 = this.listHeight[i]
           let height2 = this.listHeight[i + 1]
-          if (!height2 || (this.scrollY > height1 && this.scrollY < height2)) {
+          if (!height2 || (this.scrollY >= height1 && this.scrollY < height2)) {
             return i
           }
         }
         return 0
+      },
+      selectFoods () {
+        let foods = []
+        this.goods.forEach((good) => {
+          good.foods.forEach((food) => {
+            if (food.count) {
+              foods.push(food)
+            }
+          })
+        })
+        return foods
       }
     },
     created () {
@@ -74,10 +101,9 @@
       .then((res) => {
         if (res.data.errno === ERR_OK) {
           this.goods = res.data.data
-          console.log(this.goods)
           this.$nextTick(() => {
             this._initScroll()
-            this._calculateHeight()
+            this._caculateHeight()
           })
         }
       })
@@ -87,22 +113,46 @@
     },
     methods: {
       _initScroll () {
-        this.menuScroll = new BScroll(this.$refs.menuWrapper, {a: ''})
-        this.foodsScroll = new BScroll(this.$refs.foodsWrapper, { probeType: 3 })
-
+        this.menuScroll = new BScroll(this.$refs.menuWrapper, {click: true})
+        this.foodsScroll = new BScroll(this.$refs.foodsWrapper, { probeType: 3, click: true })
         this.foodsScroll.on('scroll', (pos) => {
           this.scrollY = Math.abs(Math.round(pos.y))
         })
       },
       _caculateHeight () {
         let foodList = this.$refs.foodsWrapper.getElementsByClassName('food-list-hook')
+        let len = foodList.length
         let height = 0
+        
         this.listHeight.push(height)
-        for (let i = 0; i < foodList.length; i++) {
+        for (let i = 0; i < len; i++) {
           let item = foodList[i]
           height += item.clientHeight
           this.listHeight.push(height)
         }
+      },
+      selectMenu (index, event) {
+        if (!event._constructed) {
+          return null
+        }
+        let foodList = this.$refs.foodsWrapper.getElementsByClassName('food-list-hook')
+        let el = foodList[index]
+        this.foodsScroll.scrollToElement(el, 300)
+      },
+      addFood (target) {
+          this._drop(target)
+      },
+      _drop (target) {
+        this.$nextTick(() => {
+          this.$refs.shopcart.drop(target)
+        })
+      },
+      selectFood (food, event) {
+        if (!event._constructed) {
+          return null
+        }
+        this.selectedFood = food
+        this.$refs.food.show()
       }
     }
   }
@@ -127,6 +177,14 @@
         height: 54px
         line-height: 14px
         padding: 0 12px
+        &.current
+          position: relative 
+          z-index: 10
+          margin-top: -1px
+          background: #ffffff
+          font-weight: 700
+          .text
+            border-none()
         .icon
           display: inline-block
           vertical-align: top
@@ -151,7 +209,6 @@
           vertical-align: middle
           border-1px(rgba(7, 17, 27, .1))
           font-size: 12px
-
     .foods-wrapper
       flex: 1
       .title
@@ -188,7 +245,6 @@
           .desc
             margin-bottom: 8px
             line-height: 12px
-
           .extra
             .count
               margin-right: 12px
@@ -203,5 +259,8 @@
               text-decoration: line-through
               font-size: 10px
               color: rgb(147, 153, 159)
-      
+          .cartcontrol-wrapper
+            position: absolute 
+            right: 0
+            bottom: 12px
 </style>

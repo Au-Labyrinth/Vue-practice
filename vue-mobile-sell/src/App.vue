@@ -12,7 +12,7 @@
         <router-link to='/sellers'>商家</router-link>
       </div>
     </div>
-    <router-view></router-view>
+    <router-view :seller='seller'></router-view>
   </div>
 </template>
 
@@ -33,25 +33,15 @@ export default {
     }
   },
   created () {
-     axios.get('/api/getSeller').then((res) => {
-      if (res.data.errno === ERR_OK) {
-        this.seller = res.data.data
-      }
-    }).catch((err) => {
-      console.log(err)
-    })
-  },
-  mounted () {
-    // axios.get('/api/getGoods').then((res) => {
-    //   console.log(res.data.data)
-    // }).catch((err) => {
-    //   console.log(err)
-    // })
-    // axios.get('/api/getRating').then((res) => {
-    //   console.log(res.data.data)
-    // }).catch((err) => {
-    //   console.log(err)
-    // })
+     axios.get('/api/getSeller')
+     .then((res) => {
+        if (res.data.errno === ERR_OK) {
+          this.seller = res.data.data
+        }
+      })
+     .catch((err) => {
+        console.log(err)
+      })
   }
 }
 </script>
