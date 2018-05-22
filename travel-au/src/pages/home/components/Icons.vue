@@ -21,7 +21,12 @@ export default {
     return {
       swiperOption: {
         pagination: '.swiper-pagination',
-        autoplay: false
+        autoplay: false,
+        effect: 'flip',
+        flipEffect: {
+          slideShadows: true,
+          limitRotation: true
+        }
       },
       iconsList: [
         {
