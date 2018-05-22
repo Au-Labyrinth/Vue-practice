@@ -286,9 +286,10 @@ s
           min-width: 0
           .item-title
             line-height: .54rem
-            font-size: .32rem
+            font-size: .28rem
           .item-desc
             line-height: .4rem
+            font-size: .24rem
             color: #cccccc
             ellipsis()
           .item-button
@@ -296,6 +297,7 @@ s
             margin-top: .16rem
             background-color: #ff9300
             padding: 0 .2rem
+            font-size: .24rem
             border-radius: .06rem
             color: #ffffff
 </style>

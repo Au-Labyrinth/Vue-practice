@@ -79,9 +79,10 @@ s
         padding: .1rem
         .item-title
           line-height: .54rem
-          font-size: .32rem
+          font-size: .28rem
         .item-desc
           line-height: .4rem
+          font-size: .24rem
           color: #616161
           ellipsis()
 </style>
