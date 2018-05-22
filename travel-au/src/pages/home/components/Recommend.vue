@@ -54,116 +54,18 @@
 <script>
 export default {
   name: 'HomeRecommend',
+  props: {
+    hotList: {
+      type: Array,
+      default () {}
+    },
+    recommendList: {
+      type: Array,
+      default () {}
+    }
+  },
   data () {
     return {
-      hotList: [
-        {
-          id: '001',
-          fullLink: 'http://touch.piao.qunar.com/touch/detail.htm?id=187807&from=as_recommend_sight',
-          imgUrl: 'http://img1.qunarzz.com/sight/p0/1412/be/c788f0f3767d2ea037b9b66d2010bfa4.water.jpg_150x150_a980923f.jpg',
-          desc: '宋城千古情',
-          price: '250',
-          rank: 'http://img1.qunarzz.com/piao/fusion/1710/ab/159673b63e6ca702.png'
-        },
-        {
-          id: '002',
-          fullLink: 'http://touch.piao.qunar.com/touch/detail.htm?id=186956&from=as_recommend_sight',
-          imgUrl: 'http://img1.qunarzz.com/wugc/p3/201206/02/44c1fe10b91aed6793835fbb.jpg_150x150_63d4cf19.jpg',
-          desc: '西溪国家湿地公园',
-          price: '138',
-          rank: 'http://img1.qunarzz.com/piao/fusion/1710/2d/36d0c4adaebbbc02.png'
-        },
-        {
-          id: '003',
-          fullLink: 'http://touch.piao.qunar.com/touch/detail.htm?id=38354&from=as_recommend_sight',
-          imgUrl: 'http://img1.qunarzz.com/sight/p0/1709/28/288fbeccc335f774a3.img.jpg_150x150_1df64606.jpg',
-          desc: '最忆是杭州”- G20峰会特别版《印象西湖》',
-          price: '340',
-          rank: 'http://img1.qunarzz.com/piao/fusion/1710/67/edc47ffef9e96b02.png'
-        },
-        {
-          id: '004',
-          fullLink: 'http://touch.piao.qunar.com/touch/detail.htm?id=31307&from=as_recommend_sight',
-          imgUrl: 'http://img1.qunarzz.com/sight/p0/1603/57/57ee153a3441d35190.water.jpg_150x150_75528c36.jpg',
-          desc: '杭州飞来峰',
-          price: '45',
-          rank: ''
-        },
-        {
-          id: '005',
-          fullLink: 'http://touch.piao.qunar.com/touch/detail.htm?id=532&from=as_recommend_sight',
-          imgUrl: 'http://img1.qunarzz.com/sight/p0/1603/ae/aecef86d7655873f90.water.jpg_150x150_da975344.jpg',
-          desc: '杭州野生动物园',
-          price: '140',
-          rank: ''
-        },
-        {
-          id: '006',
-          fullLink: 'http://touch.piao.qunar.com/touch/detail.htm?id=678&from=as_recommend_sight',
-          imgUrl: 'http://img1.qunarzz.com/sight/p0/1804/3c/3c1d865ea3175504a3.img.jpg_150x150_64c55468.jpg',
-          desc: '千岛湖',
-          price: '23',
-          rank: ''
-        },
-        {
-          id: '007',
-          fullLink: 'http://touch.piao.qunar.com/touch/detail.htm?id=463423&from=as_recommend_sight',
-          imgUrl: 'http://img1.qunarzz.com/sight/p0/1705/71/71815dd0ca83158aa3.water.jpg_150x150_23316e65.jpg',
-          desc: '杭州国际博览中心（G20峰会体验馆）',
-          price: '80',
-          rank: ''
-        },
-        {
-          id: '008',
-          fullLink: 'http://touch.piao.qunar.com/touch/detail.htm?id=462989&from=as_recommend_sight',
-          imgUrl: 'http://img1.qunarzz.com/sight/p0/1703/e3/e3d2c4a62fdc54aaa3.img.jpg_150x150_008f8351.jpg',
-          desc: '灵隐寺',
-          price: '0.1',
-          rank: ''
-        },
-        {
-          id: '009',
-          fullLink: 'http://touch.piao.qunar.com/touch/detail.htm?id=456841&from=as_recommend_sight',
-          imgUrl: 'http://img1.qunarzz.com/sight/p0/1603/ff/ff223ef32c48528f90.water.jpg_150x150_6bc50e7b.jpg',
-          desc: '西湖游船',
-          price: '35',
-          rank: ''
-        },
-        {
-          id: '010',
-          fullLink: 'http://touch.piao.qunar.com/touch/detail.htm?id=458024&from=as_recommend_sight',
-          imgUrl: 'http://img1.qunarzz.com/sight/p0/1604/e3/e31e236ddd71e31b90.water.jpg_150x150_71b7f2f3.jpg',
-          desc: '梅峰岛',
-          price: '210',
-          rank: ''
-        }
-      ],
-      recommendList: [{
-        'id': '0001',
-        'imgUrl': 'http://img1.qunarzz.com/sight/p0/1409/19/adca619faaab0898245dc4ec482b5722.jpg_140x140_80f63803.jpg',
-        'title': '故宫',
-        'desc': '东方宫殿建筑代表，世界宫殿建筑典范'
-      }, {
-        'id': '0002',
-        'imgUrl': 'http://img1.qunarzz.com/sight/p0/1511/d2/d2aec2dfc5aa771290.water.jpg_140x140_abb362a7.jpg',
-        'title': '南山滑雪场',
-        'desc': '北京专业级滑雪圣地'
-      }, {
-        'id': '0003',
-        'imgUrl': 'http://img1.qunarzz.com/sight/p0/1501/f4/f467729126949c3a.water.jpg_140x140_ef235b1c.jpg',
-        'title': '天安门广场',
-        'desc': '我爱北京天安门，天安门上太阳升'
-      }, {
-        'id': '0004',
-        'imgUrl': 'http://img1.qunarzz.com/sight/p0/1501/40/40b2b6c951b28fdd.water.jpg_140x140_1c863e5c.jpg',
-        'title': '水立方',
-        'desc': '中国的荣耀，阳光下的晶莹水滴'
-      }, {
-        'id': '0005',
-        'imgUrl': 'http://img1.qunarzz.com/sight/p0/201308/23/b283071686e64dfec8d65eac.jpg_140x140_8c5a7c49.jpg',
-        'title': '温都水城养生馆',
-        'desc': '各种亚热带植物掩映其间仿佛置身热带雨林'
-      }]
     }
   }
 }
