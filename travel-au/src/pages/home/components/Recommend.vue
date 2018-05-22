@@ -168,7 +168,7 @@ export default {
   }
 }
 </script>
-
+s
 <style lang='stylus' scoped>
   @import '~common/stylus/variable'
   @import '~common/stylus/mixin'
