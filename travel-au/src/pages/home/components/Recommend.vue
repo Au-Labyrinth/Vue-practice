@@ -39,14 +39,20 @@
       <span class='like-list-text'>猜你喜欢</span>
     </div>
     <ul class='like-list-con'>
-      <li class='like-list-item border-bottom' v-for='item in recommendList' :key='item.id'>
+      <router-link
+        tag='li'
+        class='like-list-item border-bottom'
+        v-for='item in recommendList'
+        :key='item.id'
+        :to="'/detail/' + item.id "
+      >
         <img class='item-img' :src='item.imgUrl'>
         <div class='item-info'>
           <p class='item-title'>{{ item.title }}</p>
           <p class='item-desc'>{{ item.desc }}</p>
           <button class='item-button'>查看详情</button>
         </div>
-      </li>
+      </router-link>
     </ul>
   </div>
 </template>
