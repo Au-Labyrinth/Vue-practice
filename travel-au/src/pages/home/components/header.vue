@@ -21,12 +21,6 @@ import { mapState, mapGetters } from 'vuex'
 
 export default {
   name: 'HomeHeader',
-  props: {
-    city: {
-      type: String,
-      default: 'Au'
-    }
-  },
   computed: {
     ...mapState([
       'city'
