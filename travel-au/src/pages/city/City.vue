@@ -1,10 +1,12 @@
 <template>
-  <div>
-    <city-header></city-header>
-    <city-search :cities='cities'></city-search>
-    <city-list :cities='cities' :hotCities='hotCities' :letter='letter'></city-list>
-    <city-alphabet :cities='cities' @change='handleLetterChange'></city-alphabet>
-  </div>
+  <transition name='slide'>
+    <div class="city-container">
+      <city-header></city-header>
+        <city-search :cities='cities'></city-search>
+        <city-list :cities='cities' :hotCities='hotCities' :letter='letter'></city-list>
+        <city-alphabet :cities='cities' @change='handleLetterChange'></city-alphabet>
+    </div>
+  </transition>
 </template>
 
 <script>
@@ -53,5 +55,15 @@ export default {
 </script>
 
 <style lang="stylus" scoped>
-  @import '~common/stylus/variable'
+  .slide-enter, .slide-leave-to
+    transform: translate3d(100%, 0, 0)
+  .slide-enter-active, .slide-leave-active
+    transition: all .5s
+  .city-container
+    z-index: 999
+    position: absolute
+    top: 0
+    left: 0
+    bottom: 0
+    right: 0
 </style>

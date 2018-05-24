@@ -82,7 +82,9 @@ export default {
     }
   },
   mounted () {
-    this.scroll = new Bscroll(this.$refs.wrapper)
+    this.$nextTick(() => {
+      this.scroll = new Bscroll(this.$refs.wrapper)
+    })
   },
   components: {
     Bscroll
@@ -108,6 +110,7 @@ export default {
     left: 0
     right: 0
     bottom: 0
+    background: #ffffff
     .title
       line-height: .54rem
       background-color: #eeeeee

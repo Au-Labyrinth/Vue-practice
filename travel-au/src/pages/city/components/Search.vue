@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="container">
     <div class="search">
       <input v-model='keyword' class="search-input" type="text" placeholder='输入城市名或拼音'>
     </div>
