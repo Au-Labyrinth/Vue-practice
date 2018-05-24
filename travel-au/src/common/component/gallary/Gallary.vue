@@ -1,9 +1,9 @@
 <template>
-  <div class="container">
+  <div class="container" @click='handleGallaryClick'>
     <div class="wrapper">
       <swiper :options='swiperOptions'>
         <swiper-slide v-for='(item, index) in imgs' :key='index'>
-          <img class="gallary-img" :src="item">
+          <img class="gallary-img" :src="item" @click.stop>
         </swiper-slide>
         <div class="swiper-pagination" slot='pagination'></div>
       </swiper>
@@ -26,8 +26,15 @@ export default {
     return {
       swiperOptions: {
         pagination: '.swiper-pagination',
-        paginationType: 'fraction'
+        paginationType: 'fraction',
+        observer: true,
+        observeParents: true
       }
+    }
+  },
+  methods: {
+    handleGallaryClick () {
+      this.$emit('closeGallary')
     }
   }
 }
