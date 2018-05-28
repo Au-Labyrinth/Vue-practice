@@ -2,6 +2,6 @@
 
 @mixin flex($direction:column,$inline:block) {
   display: if($inline==block,flex,inline-flex);
-  flex-direction: $direcyion;
+  flex-direction: $direction;
   flex-wrap: wap;
 }
