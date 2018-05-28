@@ -1,19 +1,20 @@
 <template lang="html">
-    <div :class="$style.home">
-        <h1>哈哈哈</h1>
-        <h2>2222</h2>
+    <div>
+        <heador></heador>
+        <slider></slider>
     </div>
 </template>
 
 <script>
+import Heador from '../public/header.vue'
+import Slider from './hslider.vue'
+
 export default {
+  components: {
+    Heador,
+    Slider
+  }
 }
 </script>
 
-<style lang="scss" module>
-  @import '../../css/reset.scss';
-  .home{
-    color: lightcoral;
-    font-size: 20px;
-  }
-</style>
+<style lang="scss" module></style>
