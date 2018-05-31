@@ -48,7 +48,7 @@ export default {
       min-width: 120px;
       padding: 0;
       border-radius: 4px;
-      margin: 28px 24px 0 0;
+      margin: 25px 24px 0 0;
     }
   }
 </style>
