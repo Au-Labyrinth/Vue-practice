@@ -1,6 +1,6 @@
-# zl-wechat
+# supply-chain
 
-> A Vue.js project
+> supply chain finance application
 
 ## Build Setup
 
