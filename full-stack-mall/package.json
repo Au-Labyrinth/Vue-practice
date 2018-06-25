@@ -12,7 +12,17 @@
   },
   "dependencies": {
     "axios": "^0.18.0",
+    "cookie-parser": "~1.4.3",
+    "debug": "~2.6.9",
+    "ejs": "^2.6.1",
+    "express": "~4.16.0",
+    "http-errors": "~1.6.2",
+    "jade": "~1.11.0",
+    "mongoose": "^5.1.6",
+    "morgan": "~1.9.0",
     "vue": "^2.5.2",
+    "vue-infinite-scroll": "^2.0.2",
+    "vue-lazyload": "^1.2.6",
     "vue-router": "^3.0.1"
   },
   "devDependencies": {
@@ -52,8 +62,6 @@
     "rimraf": "^2.6.0",
     "semver": "^5.3.0",
     "shelljs": "^0.7.6",
-    "stylus": "^0.54.5",
-    "stylus-loader": "^3.0.2",
     "uglifyjs-webpack-plugin": "^1.1.1",
     "url-loader": "^0.5.8",
     "vue-loader": "^13.3.0",
