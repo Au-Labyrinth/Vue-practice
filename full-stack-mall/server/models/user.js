@@ -4,17 +4,22 @@ var userSchema = new mongoose.Schema({
   "userName": String,
   "userPwd": String,
   "orderList": Array,
-  "cartList": [
-    {
+  "cartList": [{
       "productId": String,
       "productName": String,
       "salePrice": String,
       "productImage": String,
       "checked": String,
       "productNum": String
-    }
-  ],
-  "addressList": Array
+  }],
+  "addressList": [{
+      "addressId": String,
+      "userName": String,
+      "streetName": String,
+      "postCode": String,
+      "tel": String,
+      "isDefault": Boolean
+  }]
 });
 
 module.exports = mongoose.model("User", userSchema);

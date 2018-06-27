@@ -62,21 +62,21 @@
               <li v-for="item in cartList" :key="item.productId">
                 <div class="cart-tab-1">
                   <div class="cart-item-check">
-                    <a href="javascipt:;" class="checkbox-btn item-check-btn" v-bind:class="{'check':item.checked=='1'}" @click="editCart('checked', item)">
+                    <a href="javascipt:;" class="checkbox-btn item-check-btn" :class="{'check':item.checked=='1'}" @click="editCart('checked', item)">
                       <svg class="icon icon-ok">
                         <use xlink:href="#icon-ok"></use>
                       </svg>
                     </a>
                   </div>
                   <div class="cart-item-pic">
-                    <img v-lazy="'/static/'+item.productImage" v-bind:alt="item.productName">
+                    <img v-lazy="'/static/'+item.productImage" :alt="item.productName">
                   </div>
                   <div class="cart-item-title">
                     <div class="item-name">{{item.productName}}</div>
                   </div>
                 </div>
                 <div class="cart-tab-2">
-                  <div class="item-price">{{ item.salePrice }}</div>
+                  <div class="item-price">{{ item.salePrice | currency('$') }}</div>
                 </div>
                 <div class="cart-tab-3">
                   <div class="item-quantity">
@@ -90,11 +90,11 @@
                   </div>
                 </div>
                 <div class="cart-tab-4">
-                  <div class="item-price-total">{{ item.salePrice * item.productNum }}</div>
+                  <div class="item-price-total">{{ (item.salePrice * item.productNum) | currency('$') }}</div>
                 </div>
                 <div class="cart-tab-5">
                   <div class="cart-item-opration">
-                    <a href="javascript:;" class="item-edit-btn" @click="delCartConfirm(item.productId)">
+                    <a href="javascript:;" class="item-edit-btn" @click="delCartConfirm(item)">
                       <svg class="icon icon-del">
                         <use xlink:href="#icon-del"></use>
                       </svg>
@@ -119,10 +119,10 @@
             </div>
             <div class="cart-foot-r">
               <div class="item-total">
-                Item total: <span class="total-price"></span>
+                Item total: <span class="total-price">{{ totalPrice | currency('$') }}</span>
               </div>
               <div class="btn-wrap">
-                <a class="btn btn--red" @click="checkOut">Checkout</a>
+                <a class="btn btn--red" :class="{'btn--dis':checkedCount==0}" @click="checkOut">Checkout</a>
               </div>
             </div>
           </div>
@@ -141,11 +141,12 @@
 </template>
 
 <script>
+import axios from 'axios'
 import NavHeader from '@/components/Header'
 import NavFooter from '@/components/Footer'
 import NavBread from '@/components/Bread'
 import Modal from '@/components/Modal'
-import axios from 'axios'
+
 export default{
   data () {
     return {
@@ -154,21 +155,6 @@ export default{
       productId: '',
       modalConfirm: false
     }
-  },
-  computed: {
-    checkAllFlag () {
-      return this.checkedCount == this.cartList.lenth
-    },
-    checkedCount () {
-      let i = 0
-      this.cartList.forEach((item) => {
-        if (item.checked == '1') i++
-      })
-      return i
-    }
-  },
-  mounted () {
-    this.init()
   },
   methods: {
     init () {
@@ -179,10 +165,11 @@ export default{
     },
     delCart () {
       axios.post('/users/cartDel', {productId: this.productId}).then((response) => {
-        var res = response.data
+        let res = response.data
         if (res.status == '0') {
           this.modalConfirm = false
           this.init()
+          this.$store.commit('updateCartCount', -this.delItem.productNum)
         }
       })
     },
@@ -201,8 +188,10 @@ export default{
         productNum: item.productNum,
         checked: item.checked
       }).then((res) => {
-        var data = res.data
-        console.log(data)
+        let data = res.data
+        if (data.status == 0) {
+          this.$store.commit('updateCartCount', type == 'add' ? 1 : -1)
+        }
       })
     },
     toggleCheckAll () {
@@ -219,16 +208,43 @@ export default{
         }
       })
     },
-    delCartConfirm (productId) {
-      this.productId = productId
+    delCartConfirm (item) {
+      this.delItem = item
+      this.productId = item.productId
       this.modalConfirm = true
     },
     closeModal () {
       this.modalConfirm = false
     },
     checkOut () {
-      this.$router.push({path: '/'})
+      if (this.checkedCount > 0) {
+        this.$router.push({path: '/address'})
+      }
     }
+  },
+  computed: {
+    checkAllFlag () {
+      return this.checkedCount == this.cartList.length
+    },
+    checkedCount () {
+      let i = 0
+      this.cartList.forEach((item) => {
+        if (item.checked == '1') i++
+      })
+      return i
+    },
+    totalPrice () {
+      let money = 0
+      this.cartList.forEach((item) => {
+        if (item.checked == 1) {
+          money += parseFloat(item.salePrice) * parseInt(item.productNum)
+        }
+      })
+      return money
+    }
+  },
+  mounted () {
+    this.init()
   },
   components: {
     NavHeader,
