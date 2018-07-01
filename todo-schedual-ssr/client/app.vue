@@ -2,7 +2,14 @@
   <div id="app">
     <div id="cover"></div>
     <nav-header></nav-header>
-    <todo></todo>
+    <div style="text-align:center;">
+      <router-link to="/app/123">app123</router-link>
+      <router-link to="/app/456">app456</router-link>
+      <router-link to="/login">login</router-link>
+    </div>
+    <transition name="fade">
+      <router-view></router-view>
+    </transition>
     <nav-footer></nav-footer>
   </div>
 </template>
@@ -10,7 +17,8 @@
 <script>
   import NavHeader from './layout/header.vue'
   import NavFooter from './layout/footer.jsx'
-  import Todo from './views/todo/todo.vue'
+  // import Todo from './views/todo/todo.vue'
+  import { mapState, mapGetters, mapMutations, mapActions } from 'vuex'
 
   export default {
     data () {
@@ -18,10 +26,37 @@
         text: '黑色五叶草'
       }
     },
+    computed: {
+      ...mapState({
+        count: (state) => state.count,
+        textA: state => state.a.text,
+        textC: state => state.c.text
+      }),
+      ...mapGetters({
+        'fullName': 'fullName'
+        // textPlus: 'a/textPlus'
+      })
+
+    },
+    mounted () {
+      this.updateCountAsync({
+        num: 5,
+        time: 1500
+      })
+    },
+    methods: {
+      ...mapActions([
+        'updateCountAsync'
+
+      ]),
+      ...mapMutations([
+        'updateCount'
+      ])
+    },
     components: {
       NavHeader,
-      NavFooter,
-      Todo
+      NavFooter
+      // Todo
     }
   }
 </script>
@@ -44,4 +79,9 @@
   opacity .3
   z-index -1
 }
+
+.fade-enter-active, .fade-leave-active
+  transition: opacity .5s
+.fade-enter, .fade-leave-to
+  opacity: 0
 </style>
