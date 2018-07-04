@@ -4,11 +4,12 @@
 export default [
   {
     path: '/',
-    redirect: '/app/:id'
+    redirect: '/app'
   },
   {
     name: 'app',
-    path: '/app/:id',
+    // path: '/app/:id',
+    path: '/app',
     component: () => import('../views/todo/todo.vue')
     // props: true
     /* props: {

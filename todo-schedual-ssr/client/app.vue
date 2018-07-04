@@ -2,15 +2,17 @@
   <div id="app">
     <div id="cover"></div>
     <nav-header></nav-header>
-    <div style="text-align:center;">
+    <!-- <div style="text-align:center;">
       <router-link to="/app/123">app123</router-link>
       <router-link to="/app/456">app456</router-link>
       <router-link to="/login">login</router-link>
-    </div>
+    </div> -->
     <transition name="fade">
       <router-view></router-view>
     </transition>
+    <!-- <notification content="test notify" /> -->
     <nav-footer></nav-footer>
+    <!-- <button @click="notify">notify</button> -->
   </div>
 </template>
 
@@ -21,6 +23,9 @@
   import { mapState, mapGetters, mapMutations, mapActions } from 'vuex'
 
   export default {
+    metaInfo: {
+      title: 'Vue todo ssr app'
+    },
     data () {
       return {
         text: '黑色五叶草'
@@ -39,12 +44,19 @@
 
     },
     mounted () {
-      this.updateCountAsync({
+
+      /* this.updateCountAsync({
         num: 5,
         time: 1500
-      })
+      }) */
     },
     methods: {
+      notify () {
+        this.$notify({
+          content: 'test $notify',
+          btn: 'close'
+        })
+      },
       ...mapActions([
         'updateCountAsync'
 

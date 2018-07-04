@@ -1,6 +1,6 @@
 <template>
   <header :class="$style.mainHeader">
-    <h1>Schedual:D</h1>
+    <h1>Schedual</h1>
   </header>
 </template>
 
