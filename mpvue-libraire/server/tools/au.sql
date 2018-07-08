@@ -12,7 +12,12 @@ create table books(
   tags varchar(100),
   author varchar(100)
 )
-{
-  open_id: ocR3t0B9yXR2nmoc5YQI7jcdnSk4,
-  user_info: '.'
-}
+
+create table comments(
+  id int auto_increment primary key,
+  openid varchar(100) not null,
+  bookid varchar(10) not null,
+  comment varchar(200) not null,
+  phone varchar(50),
+  location varchar(50)
+)

@@ -13,6 +13,11 @@ export default {
 }
 </script>
 <style>
+.text-footer{
+  padding-bottom: 15px;
+  text-align: center;
+  font-size: 12px;
+}
 .text-primary{
   font-weight:500;
   color:#20B2AA;

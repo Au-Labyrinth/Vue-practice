@@ -1,39 +1,41 @@
 <template>
-  <div class="book-card">
-    <div class="thumb">
-      <img class="image"
-           :src="book.image"
-           :alt="book.title"
-           mode="aspectFit"
-      >
+  <a :href="detailUrl">
+    <div class="book-card">
+      <div class="thumb" @click.stop="preview">
+        <img class="image"
+            :src="book.image"
+            :alt="book.title"
+            mode="aspectFit"
+        >
+      </div>
+      <div class="detail">
+        <div class="row">
+          <div class="right rate-color">
+            {{book.rate}}<rate :value='book.rate'></rate>
+          </div>
+          <div class="left text-primary">
+            {{book.title}}
+          </div>
+        </div>
+        <div class="row">
+          <div class="right text-primary">
+            浏览量：{{book.count}}
+          </div>
+          <div class="left">
+            {{book.author || '未知'}}
+          </div>
+        </div>
+        <div class="row">
+          <div class="right">
+            {{ book.user_info.nickName }}
+          </div>
+          <div class="left">
+            {{book.publisher}}
+          </div>
+        </div>
+      </div>
     </div>
-    <div class="detail">
-      <div class="row">
-        <div class="right rate-color">
-          {{book.rate}}<rate :value='book.rate'></rate>
-        </div>
-        <div class="left text-primary">
-          {{book.title}}
-        </div>
-      </div>
-      <div class="row">
-        <div class="right">
-          浏览量：
-        </div>
-        <div class="left">
-          {{book.author}}
-        </div>
-      </div>
-      <div class="row">
-        <div class="right">
-          添加人
-        </div>
-        <div class="left">
-          {{book.publisher}}
-        </div>
-      </div>
-    </div>
-  </div>
+  </a>
 </template>
 
 <script>
@@ -43,6 +45,19 @@ export default {
     book: {
       type: Array,
       required: true
+    }
+  },
+  computed: {
+    detailUrl () {
+      return '/pages/detail/main?id=' + this.book.id
+    }
+  },
+  methods: {
+    preview () {
+      wx.previewImage({
+        current: this.book.image,
+        urls: [this.book.image]
+      })
     }
   },
   components: {
